@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>QR Scene</title>
+<title>QR Wukong</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
     body {
         margin: 0;
@@ -12,71 +15,143 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: Arial, sans-serif;
+        font-family: 'Montserrat', sans-serif;
+        overflow: hidden;
     }
 
     .center {
         text-align: center;
     }
 
-    img {
-        width: 200px;
-        height: 200px;
+    /* QR */
+    .qr {
+        width: 320px;
+        height: 320px;
+    }
+
+    /* CONFIRMED */
+    .confirm {
+        margin-top: 18px;
+        font-family: 'Cinzel', serif;
+        font-size: 12px;
+        color: #c9a227;
+        opacity: 0;
+        transform: scale(0.3);
+        transition: all 1s ease;
+    }
+
+    .confirm.show {
+        opacity: 1;
+        transform: scale(1);
+        font-size: 30px;
     }
 
     .hidden {
         display: none;
     }
 
-    .confirm {
-        margin-top: 12px;
-        font-size: 24px;
-        font-weight: bold;
-    }
-
+    /* BUTTON */
     .button {
-        background: red;
+        background: linear-gradient(180deg, #ff3b3b, #b30000);
         color: white;
         border: none;
-        padding: 20px 40px;
+        padding: 22px 46px;
         font-size: 22px;
-        border-radius: 10px;
+        border-radius: 14px;
         cursor: pointer;
+        box-shadow: 0 10px 0 #7a0000, 0 18px 25px rgba(0,0,0,0.25);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        font-weight: 700;
     }
 
-    .text-big {
-        margin-top: 20px;
-        font-size: 26px;
-        font-weight: bold;
+    .button.press {
+        transform: translateY(6px);
+        box-shadow: 0 4px 0 #7a0000, 0 8px 15px rgba(0,0,0,0.2);
+    }
+
+    .button.release {
+        transform: translateY(0);
+        box-shadow: 0 10px 0 #7a0000, 0 18px 25px rgba(0,0,0,0.25);
     }
 
     .warning {
-        margin-top: 10px;
-        font-size: 16px;
+        margin-top: 14px;
+        font-size: 15px;
+        color: #7b4fa3;
+        opacity: 0.85;
+    }
+
+    /* SPELL TEXT – FIX CHỒNG */
+    .spell {
+        font-family: 'Cinzel', serif;
+        font-size: 42px;
+        margin-bottom: 28px; /* ĐẨY CAO HẲN LÊN */
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .spell.show {
+        opacity: 1;
+        animation: blink 0.6s infinite alternate;
+    }
+
+    @keyframes blink {
+        0% {
+            color: red;
+            text-shadow: 0 0 10px red;
+        }
+        100% {
+            color: cyan;
+            text-shadow: 0 0 10px cyan;
+        }
     }
 </style>
 </head>
+
 <body>
 
 <!-- SCENE 1 -->
 <div id="scene1" class="center">
-    <!-- Thay link QR của bạn vào đây -->
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Wukong">
-    <div class="confirm">Wukong confirmed</div>
+    <img class="qr"
+         src="https://api.qrserver.com/v1/create-qr-code/?size=700x700&data=WukongConfirmed&margin=0">
+    <div id="confirmText" class="confirm">Wukong confirmed</div>
 </div>
 
 <!-- SCENE 2 -->
 <div id="scene2" class="center hidden">
-    <button class="button">Press to chant the spell</button>
-    <div class="text-big">Press to chant the spell</div>
+    <div id="spellText" class="spell">Spell Activated</div>
+    <button id="spellButton" class="button">Press to chant the spell</button>
     <div class="warning">Warning: Emotional damage possible</div>
 </div>
 
 <script>
+    // 2s: confirmed
+    setTimeout(() => {
+        document.getElementById("confirmText").classList.add("show");
+    }, 2000);
+
+    // 4s: scene 2
     setTimeout(() => {
         document.getElementById("scene1").style.display = "none";
         document.getElementById("scene2").classList.remove("hidden");
-    }, 1500);
+    }, 4000);
+
+    // 9s: press
+    setTimeout(() => {
+        document.getElementById("spellButton").classList.add("press");
+    }, 9000);
+
+    // 9.25s: release
+    setTimeout(() => {
+        const btn = document.getElementById("spellButton");
+        btn.classList.remove("press");
+        btn.classList.add("release");
+    }, 9250);
+
+    // 9.3s: show spell
+    setTimeout(() => {
+        document.getElementById("spellText").classList.add("show");
+    }, 9300);
 </script>
 
 </body>
