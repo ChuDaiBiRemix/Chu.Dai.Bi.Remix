@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QR Scene</title>
+<style>
+    body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .confirm {
+        margin-top: 12px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .button {
+        background: red;
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 22px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .text-big {
+        margin-top: 20px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .warning {
+        margin-top: 10px;
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+
+<!-- SCENE 1 -->
+<div id="scene1" class="center">
+    <!-- Thay link QR của bạn vào đây -->
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Wukong">
+    <div class="confirm">Wukong confirmed</div>
+</div>
+
+<!-- SCENE 2 -->
+<div id="scene2" class="center hidden">
+    <button class="button">Press to chant the spell</button>
+    <div class="text-big">Press to chant the spell</div>
+    <div class="warning">Warning: Emotional damage possible</div>
+</div>
+
+<script>
+    setTimeout(() => {
+        document.getElementById("scene1").style.display = "none";
+        document.getElementById("scene2").classList.remove("hidden");
+    }, 1500);
+</script>
+
+</body>
+</html>
